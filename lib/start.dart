@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:page_transition/page_transition.dart';
-import 'package:pebbl_health/shared/login.dart';
+import 'package:pebbl_health/login.dart';
 import 'package:pebbl_health/shared/shared.dart';
 
 class Start extends StatefulWidget {
@@ -13,54 +13,67 @@ class Start extends StatefulWidget {
   _StartState createState() => _StartState();
 }
 
-class _StartState extends State<Start> {
+class _StartState extends State<Start> with SingleTickerProviderStateMixin {
+  late TabController controller;
+
+  @override
+  void initState() {
+    super.initState();
+
+    controller = TabController(vsync: this, length: 5);
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return DefaultTabController(
-      length: 5,
-      child: Scaffold(
-        body: TabBarView(
-          children: [
-            TabLayout(
-              imageName: "welcome_image",
-              text1: "Welcome to ",
-              text2: "Pebbl",
-              text3: "Your Healthcare Companion",
-              pageNo: 0,
-            ),
-            TabLayout(
-              imageName: "vitals_image",
-              text1: "Record your vitals",
-              text2: "",
-              text3:
-                  "Use the device to measure your Heart Rate, SpO2, Body Temperature and Lung Health",
-              pageNo: 1,
-            ),
-            TabLayout(
-              imageName: "teleconsult_image",
-              text1: "Teleconsult your Doctor",
-              text2: "",
-              text3:
-                  "Chat or video call your doctor, get timely reminders to take prescribed medicines",
-              pageNo: 2,
-            ),
-            TabLayout(
-              imageName: "records_image",
-              text1: "Store Health Records",
-              text2: "",
-              text3: "Past Health records, Diagnostic reports, Vital records",
-              pageNo: 3,
-            ),
-            TabLayout(
-              imageName: "order_image",
-              text1: "Order Tests and Medicines",
-              text2: "",
-              text3:
-                  "Get online delivery of medicines, Book tests at diagnostic centres",
-              pageNo: 4,
-            ),
-          ],
-        ),
+    return Scaffold(
+      body: TabBarView(
+        controller: controller,
+        children: [
+          TabLayout(
+            imageName: "welcome_image",
+            text1: "Welcome to ",
+            text2: "Pebbl",
+            text3: "Your Healthcare Companion",
+            pageNo: 0,
+          ),
+          TabLayout(
+            imageName: "vitals_image",
+            text1: "Record your vitals",
+            text2: "",
+            text3:
+                "Use the device to measure your Heart Rate, SpO2, Body Temperature and Lung Health",
+            pageNo: 1,
+          ),
+          TabLayout(
+            imageName: "teleconsult_image",
+            text1: "Teleconsult your Doctor",
+            text2: "",
+            text3:
+                "Chat or video call your doctor, get timely reminders to take prescribed medicines",
+            pageNo: 2,
+          ),
+          TabLayout(
+            imageName: "records_image",
+            text1: "Store Health Records",
+            text2: "",
+            text3: "Past Health records, Diagnostic reports, Vital records",
+            pageNo: 3,
+          ),
+          TabLayout(
+            imageName: "order_image",
+            text1: "Order Tests and Medicines",
+            text2: "",
+            text3:
+                "Get online delivery of medicines, Book tests at diagnostic centres",
+            pageNo: 4,
+          ),
+        ],
       ),
     );
   }
@@ -91,11 +104,11 @@ class TabLayout extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.2,
-                ),
-                SvgPicture.asset(
-                  "assets/images/$imageName.svg",
+                Expanded(child: Container()),
+                Positioned.fill(
+                  child: SvgPicture.asset(
+                    "assets/images/$imageName.svg",
+                  ),
                 ),
                 SizedBox(
                   height: MediaQuery.of(context).size.height * 0.02,
@@ -117,6 +130,7 @@ class TabLayout extends StatelessWidget {
                   text3,
                   style: textStyle.copyWith(
                       fontSize: MediaQuery.of(context).size.width * 0.04),
+                  textAlign: TextAlign.center,
                 ),
                 Expanded(child: Container()),
                 Row(
@@ -148,7 +162,7 @@ class TabLayout extends StatelessWidget {
                 )
               ],
             ),
-          )
+          ),
         ],
       ),
     );

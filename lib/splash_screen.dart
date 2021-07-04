@@ -18,7 +18,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   void navigate() async {
     Future.delayed(Duration(seconds: 1, milliseconds: 500)).then((value) {
-      Navigator.of(context).push(
+      Navigator.of(context).pushReplacement(
           PageTransition(child: Start(), type: PageTransitionType.rightToLeft));
     });
   }
