@@ -6,7 +6,6 @@ const secondaryColor = Color(0xff1D2366);
 
 const textStyle = TextStyle(
   color: secondaryColor,
-  fontFamily: "Roboto",
 );
 
 const textInputDecoration = InputDecoration(

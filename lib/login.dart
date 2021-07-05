@@ -49,17 +49,11 @@ class _LoginState extends State<Login> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Positioned.fill(
-                            child: Align(
-                              alignment: Alignment.topLeft,
-                              child: Text(
-                                "Welcome,",
-                                style: textStyle.copyWith(
-                                    fontSize:
-                                        MediaQuery.of(context).size.width *
-                                            0.1),
-                              ),
-                            ),
+                          Text(
+                            "Welcome,",
+                            style: textStyle.copyWith(
+                                fontSize:
+                                    MediaQuery.of(context).size.width * 0.1),
                           ),
                           Text(
                             "Sign in to continue!",
@@ -79,6 +73,7 @@ class _LoginState extends State<Login> {
                                 children: [
                                   TextFormField(
                                     textInputAction: TextInputAction.next,
+                                    keyboardType: TextInputType.emailAddress,
                                     validator: (val) => val!.isEmpty
                                         ? 'Enter an email id'
                                         : null,

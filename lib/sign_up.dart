@@ -3,10 +3,9 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:pebbl_health/complete_profile.dart';
 import 'package:pebbl_health/login.dart';
 import 'package:pebbl_health/shared/shared.dart';
-
-import 'home.dart';
 
 class SignUp extends StatefulWidget {
   const SignUp({Key? key}) : super(key: key);
@@ -20,7 +19,8 @@ class _SignUpState extends State<SignUp> {
   String emailId = "";
   String password = "";
   String confirmPassword = "";
-  bool obscureText = true;
+  bool obscureText1 = true;
+  bool obscureText2 = true;
 
   @override
   Widget build(BuildContext context) {
@@ -50,17 +50,11 @@ class _SignUpState extends State<SignUp> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Positioned.fill(
-                            child: Align(
-                              alignment: Alignment.topLeft,
-                              child: Text(
-                                "Create Account,",
-                                style: textStyle.copyWith(
-                                    fontSize:
-                                        MediaQuery.of(context).size.width *
-                                            0.1),
-                              ),
-                            ),
+                          Text(
+                            "Create Account,",
+                            style: textStyle.copyWith(
+                                fontSize:
+                                    MediaQuery.of(context).size.width * 0.1),
                           ),
                           Text(
                             "Sign Up to get started!",
@@ -80,6 +74,7 @@ class _SignUpState extends State<SignUp> {
                                 children: [
                                   TextFormField(
                                     textInputAction: TextInputAction.next,
+                                    keyboardType: TextInputType.emailAddress,
                                     validator: (val) => val!.isEmpty
                                         ? 'Enter an email id'
                                         : null,
@@ -98,13 +93,13 @@ class _SignUpState extends State<SignUp> {
                                           MediaQuery.of(context).size.height *
                                               0.03),
                                   TextFormField(
-                                    textInputAction: TextInputAction.done,
+                                    textInputAction: TextInputAction.next,
                                     validator: (val) => val!.length < 6
                                         ? 'Enter a password with at least 6 characters'
                                         : password != confirmPassword
                                             ? "Entered password are different"
                                             : null,
-                                    obscureText: obscureText,
+                                    obscureText: obscureText1,
                                     onChanged: (val) {
                                       setState(() => password = val.trim());
                                     },
@@ -116,14 +111,14 @@ class _SignUpState extends State<SignUp> {
                                         ),
                                         suffixIcon: IconButton(
                                           icon: Icon(
-                                            obscureText
+                                            obscureText1
                                                 ? Icons.remove_red_eye
                                                 : Icons.remove_red_eye_outlined,
                                             color: Colors.grey,
                                           ),
                                           onPressed: () {
                                             setState(() =>
-                                                obscureText = !obscureText);
+                                                obscureText1 = !obscureText1);
                                           },
                                         )),
                                   ),
@@ -138,7 +133,7 @@ class _SignUpState extends State<SignUp> {
                                         : password != confirmPassword
                                             ? "Entered password are different"
                                             : null,
-                                    obscureText: obscureText,
+                                    obscureText: obscureText2,
                                     onChanged: (val) {
                                       setState(
                                           () => confirmPassword = val.trim());
@@ -151,14 +146,14 @@ class _SignUpState extends State<SignUp> {
                                         ),
                                         suffixIcon: IconButton(
                                           icon: Icon(
-                                            obscureText
+                                            obscureText2
                                                 ? Icons.remove_red_eye
                                                 : Icons.remove_red_eye_outlined,
                                             color: Colors.grey,
                                           ),
                                           onPressed: () {
                                             setState(() =>
-                                                obscureText = !obscureText);
+                                                obscureText2 = !obscureText2);
                                           },
                                         )),
                                   ),
@@ -177,7 +172,7 @@ class _SignUpState extends State<SignUp> {
                                             Navigator.pushAndRemoveUntil(
                                                 context,
                                                 PageTransition(
-                                                    child: Home(),
+                                                    child: CompleteProfile(),
                                                     type: PageTransitionType
                                                         .rightToLeft),
                                                 (route) => false);
