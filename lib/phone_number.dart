@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:intl_phone_number_input/intl_phone_number_input.dart' as p;
 import 'package:page_transition/page_transition.dart';
 import 'package:pebbl_health/otp_verification.dart';
 import 'package:pebbl_health/shared/shared.dart';
@@ -80,31 +80,30 @@ class _PhoneNumberState extends State<PhoneNumber> {
                               ),
                             ),
                             SizedBox(
-                              height: MediaQuery.of(context).size.height * 0.1,
+                              height: MediaQuery.of(context).size.height * 0.08,
                             ),
                             Text(
                               "Enter your Mobile Number",
                               style: textStyle,
                             ),
+                            SizedBox(
+                              height: MediaQuery.of(context).size.height * 0.02,
+                            ),
                             Form(
                               key: _formKey,
                               child: Column(
                                 children: [
-                                  Padding(
-                                    padding: EdgeInsets.symmetric(
-                                        horizontal:
-                                            MediaQuery.of(context).size.width *
-                                                0.08),
-                                    child: TextFormField(
-                                      keyboardType: TextInputType.phone,
-                                      validator: (val) => val!.length != 10
-                                          ? "Enter a valid phone number"
-                                          : null,
-                                      inputFormatters: [
-                                        FilteringTextInputFormatter.allow(
-                                            RegExp(r'[0-9]')),
-                                      ],
-                                    ),
+                                  p.InternationalPhoneNumberInput(
+                                    onInputChanged: (number) {
+                                      setState(() =>
+                                          phoneNo = number.phoneNumber!.trim());
+                                    },
+                                    selectorConfig: p.SelectorConfig(
+                                        selectorType: p.PhoneInputSelectorType
+                                            .BOTTOM_SHEET,
+                                        trailingSpace: false,
+                                        useEmoji: true),
+                                    initialValue: p.PhoneNumber(isoCode: 'IN'),
                                   ),
                                   Padding(
                                     padding: EdgeInsets.all(
@@ -121,7 +120,9 @@ class _PhoneNumberState extends State<PhoneNumber> {
                                             Navigator.pushAndRemoveUntil(
                                                 context,
                                                 PageTransition(
-                                                    child: OtpVerification(),
+                                                    child: OtpVerification(
+                                                      phoneNo: phoneNo,
+                                                    ),
                                                     type: PageTransitionType
                                                         .rightToLeft),
                                                 (route) => false);

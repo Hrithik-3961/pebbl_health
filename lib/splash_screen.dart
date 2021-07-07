@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
-import 'package:pebbl_health/start.dart';
+import 'package:pebbl_health/choose_location.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -18,8 +18,8 @@ class _SplashScreenState extends State<SplashScreen> {
 
   void navigate() async {
     Future.delayed(Duration(seconds: 1, milliseconds: 500)).then((value) {
-      Navigator.of(context).pushReplacement(
-          PageTransition(child: Start(), type: PageTransitionType.rightToLeft));
+      Navigator.of(context).pushReplacement(PageTransition(
+          child: ChooseLocation(), type: PageTransitionType.rightToLeft));
     });
   }
 
