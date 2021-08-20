@@ -25,6 +25,7 @@ class _PhoneNumberState extends State<PhoneNumber> {
         FocusScope.of(context).requestFocus(FocusNode());
       },
       child: Scaffold(
+        resizeToAvoidBottomInset: false,
           appBar: AppBar(
             backgroundColor: Colors.transparent,
             elevation: 0,
@@ -36,9 +37,7 @@ class _PhoneNumberState extends State<PhoneNumber> {
                 constraints: BoxConstraints(minHeight: constraint.maxHeight),
                 child: IntrinsicHeight(
                   child: Stack(children: [
-                    Positioned.fill(
-                      child: SvgPicture.asset("assets/images/background.svg"),
-                    ),
+                    Center(child: SvgPicture.asset("assets/images/background.svg")),
                     Padding(
                       padding: EdgeInsets.all(
                           MediaQuery.of(context).size.width * 0.05),
@@ -104,6 +103,9 @@ class _PhoneNumberState extends State<PhoneNumber> {
                                         trailingSpace: false,
                                         useEmoji: true),
                                     initialValue: p.PhoneNumber(isoCode: 'IN'),
+                                  ),
+                                  SizedBox(
+                                    height: MediaQuery.of(context).size.height * 0.05,
                                   ),
                                   Padding(
                                     padding: EdgeInsets.all(

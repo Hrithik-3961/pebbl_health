@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:page_transition/page_transition.dart';
 import 'package:pebbl_health/complete_profile.dart';
 import 'package:pebbl_health/login.dart';
 import 'package:pebbl_health/shared/shared.dart';
@@ -41,9 +40,7 @@ class _SignUpState extends State<SignUp> {
                 constraints: BoxConstraints(minHeight: constraint.maxHeight),
                 child: IntrinsicHeight(
                   child: Stack(children: [
-                    Positioned.fill(
-                      child: SvgPicture.asset("assets/images/background.svg"),
-                    ),
+                    Center(child: SvgPicture.asset("assets/images/background.svg")),
                     Padding(
                       padding: EdgeInsets.all(
                           MediaQuery.of(context).size.width * 0.05),
@@ -63,7 +60,7 @@ class _SignUpState extends State<SignUp> {
                                 fontSize:
                                     MediaQuery.of(context).size.width * 0.06),
                           ),
-                          Expanded(child: Container()),
+                          Spacer(),
                           Padding(
                             padding: EdgeInsets.all(
                                 MediaQuery.of(context).size.width * 0.05),
@@ -83,10 +80,7 @@ class _SignUpState extends State<SignUp> {
                                     },
                                     decoration: textInputDecoration.copyWith(
                                         labelText: "Email id",
-                                        prefixIcon: Icon(
-                                          Icons.email,
-                                          color: Colors.grey,
-                                        )),
+                                    ),
                                   ),
                                   SizedBox(
                                       height:
@@ -105,10 +99,6 @@ class _SignUpState extends State<SignUp> {
                                     },
                                     decoration: textInputDecoration.copyWith(
                                         labelText: "Password",
-                                        prefixIcon: Icon(
-                                          Icons.lock,
-                                          color: Colors.grey,
-                                        ),
                                         suffixIcon: IconButton(
                                           icon: Icon(
                                             obscureText1
@@ -140,16 +130,12 @@ class _SignUpState extends State<SignUp> {
                                     },
                                     decoration: textInputDecoration.copyWith(
                                         labelText: "Confirm Password",
-                                        prefixIcon: Icon(
-                                          Icons.lock,
-                                          color: Colors.grey,
-                                        ),
                                         suffixIcon: IconButton(
                                           icon: Icon(
                                             obscureText2
                                                 ? Icons.remove_red_eye
                                                 : Icons.remove_red_eye_outlined,
-                                            color: Colors.grey,
+                                            color: Colors.grey[400],
                                           ),
                                           onPressed: () {
                                             setState(() =>
@@ -169,13 +155,13 @@ class _SignUpState extends State<SignUp> {
                                       child: MaterialButton(
                                         onPressed: () {
                                           if (_formKey.currentState!.validate())
-                                            Navigator.pushAndRemoveUntil(
+                                            Navigator.push(
                                                 context,
-                                                PageTransition(
-                                                    child: CompleteProfile(),
-                                                    type: PageTransitionType
-                                                        .rightToLeft),
-                                                (route) => false);
+                                                MaterialPageRoute(
+                                                  builder: (context) {
+                                                    return CompleteProfile();
+                                                  },),
+                                                );
                                         },
                                         shape: RoundedRectangleBorder(
                                             borderRadius: BorderRadius.circular(
@@ -235,7 +221,7 @@ class _SignUpState extends State<SignUp> {
                                   onTap: () {},
                                   child: SvgPicture.asset(
                                       "assets/images/google_logo.svg"))),
-                          Expanded(child: Container()),
+                          Spacer(),
                           Center(
                             child: RichText(
                               text: TextSpan(
@@ -248,10 +234,10 @@ class _SignUpState extends State<SignUp> {
                                           ..onTap = () {
                                             Navigator.pushAndRemoveUntil(
                                                 context,
-                                                PageTransition(
-                                                    child: Login(),
-                                                    type: PageTransitionType
-                                                        .rightToLeft),
+                                                MaterialPageRoute(
+                                                  builder: (context) {
+                                                    return Login();
+                                                  },),
                                                 (route) => false);
                                           },
                                         style: textStyle),

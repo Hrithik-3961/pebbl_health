@@ -43,132 +43,166 @@ class _ChooseLocationState extends State<ChooseLocation> {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      behavior: HitTestBehavior.opaque,
-      onTap: () {
-        FocusScope.of(context).requestFocus(FocusNode());
-      },
-      child: Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.transparent,
-          elevation: 0,
-          automaticallyImplyLeading: false,
-        ),
-        body: Column(
-          children: [
-            Text(
-              "Choose your location",
-              style: textStyle.copyWith(
-                  fontSize: MediaQuery.of(context).size.width * 0.08),
-            ),
-            SizedBox(
-              height: MediaQuery.of(context).size.height * 0.02,
-            ),
-            Stack(
-              children: [
-                Container(
-                  margin: EdgeInsets.only(
-                      top: MediaQuery.of(context).size.height * 0.05),
-                  height: MediaQuery.of(context).size.height * 0.77,
-                  child: FutureBuilder(
-                    future: position,
-                    builder: (context, AsyncSnapshot<Position> snapshot) {
-                      return snapshot.data != null
-                          ? GoogleMap(
-                              mapType: MapType.normal,
-                              initialCameraPosition: CameraPosition(
-                                target: LatLng(snapshot.data!.latitude,
-                                    snapshot.data!.longitude),
-                                zoom: 18.5,
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        automaticallyImplyLeading: false,
+      ),
+      body: GestureDetector(
+        behavior: HitTestBehavior.opaque,
+        onTap: () {
+          FocusScope.of(context).requestFocus(FocusNode());
+        },
+        child: LayoutBuilder(
+          builder: (context, constraint) {
+            return SingleChildScrollView(
+              child: ConstrainedBox(
+                constraints: BoxConstraints(minHeight: constraint.maxHeight),
+                child: IntrinsicHeight(
+                  child: Column(
+
+                    children: [
+                      Text(
+                        "Choose your location",
+                        style: textStyle.copyWith(
+                            fontSize: MediaQuery
+                                .of(context)
+                                .size
+                                .width * 0.08),
+                      ),
+                      SizedBox(
+                        height: MediaQuery
+                            .of(context)
+                            .size
+                            .height * 0.02,
+                      ),
+                      Expanded(
+                        child: Stack(
+                          children: [
+                            Positioned.fill(
+                              child: FutureBuilder(
+                                future: position,
+                                builder: (context, AsyncSnapshot<Position> snapshot) {
+                                  return snapshot.data != null
+                                      ? GoogleMap(
+                                    mapType: MapType.normal,
+                                    initialCameraPosition: CameraPosition(
+                                      target: LatLng(snapshot.data!.latitude,
+                                          snapshot.data!.longitude),
+                                      zoom: 18.5,
+                                    ),
+                                    markers: Set<Marker>.of(
+                                      <Marker>[
+                                        Marker(
+                                            draggable: true,
+                                            markerId: MarkerId("Marker"),
+                                            position: LatLng(latitude, longitude),
+                                            icon: BitmapDescriptor.defaultMarker,
+                                            onDragEnd: ((newPosition) {
+                                              print(
+                                                  "LOCATION: ${newPosition
+                                                      .latitude}, ${newPosition
+                                                      .longitude}");
+                                              setState(() {
+                                                latitude = newPosition.latitude;
+                                                longitude = newPosition.longitude;
+                                              });
+                                            }))
+                                      ],
+                                    ),
+                                    onMapCreated: (GoogleMapController controller) {
+                                      _controller.complete(controller);
+                                    },
+                                  )
+                                      : Container(
+                                    child: Center(
+                                      child: Text(
+                                        "Getting your location...",
+                                        style: TextStyle(
+                                            fontSize:
+                                            MediaQuery
+                                                .of(context)
+                                                .size
+                                                .width *
+                                                0.05),
+                                      ),
+                                    ),
+                                  );
+                                },
                               ),
-                              markers: Set<Marker>.of(
-                                <Marker>[
-                                  Marker(
-                                      draggable: true,
-                                      markerId: MarkerId("Marker"),
-                                      position: LatLng(latitude, longitude),
-                                      icon: BitmapDescriptor.defaultMarker,
-                                      onDragEnd: ((newPosition) {
-                                        print(
-                                            "LOCATION: ${newPosition.latitude}, ${newPosition.longitude}");
-                                        setState(() {
-                                          latitude = newPosition.latitude;
-                                          longitude = newPosition.longitude;
-                                        });
-                                      }))
-                                ],
+                            ),
+                            Form(
+                              key: _formKey,
+                              child: Padding(
+                                padding: EdgeInsets.all(
+                                    MediaQuery
+                                        .of(context)
+                                        .size
+                                        .width * 0.05),
+                                child: Stack(
+                                    alignment: AlignmentDirectional.centerEnd,
+                                    children: [
+                                      TextFormField(
+                                        decoration: textInputDecoration.copyWith(
+                                            hintText: "Enter your Location"),
+                                      ),
+                                      IconButton(
+                                          onPressed: () {},
+                                          icon: Icon(Icons.search))
+                                    ]),
                               ),
-                              onMapCreated: (GoogleMapController controller) {
-                                _controller.complete(controller);
-                              },
-                            )
-                          : Container(
-                              child: Center(
-                                child: Text(
-                                  "Getting your location...",
-                                  style: TextStyle(
-                                      fontSize:
-                                          MediaQuery.of(context).size.width *
-                                              0.05),
+                            ),
+                            Align(
+                              alignment: Alignment.bottomCenter,
+                              child: Padding(
+                                padding: EdgeInsets.all(
+                                    MediaQuery
+                                        .of(context)
+                                        .size
+                                        .width * 0.15),
+                                child: SizedBox(
+                                  width: double.infinity,
+                                  height: MediaQuery
+                                      .of(context)
+                                      .size
+                                      .height * 0.055,
+                                  child: MaterialButton(
+                                    onPressed: () {
+                                      if (_formKey.currentState!.validate())
+                                        Navigator.pushAndRemoveUntil(
+                                            context,
+                                            PageTransition(
+                                                child: ConnectDevice(),
+                                                type: PageTransitionType
+                                                    .rightToLeft),
+                                                (route) => false);
+                                    },
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(
+                                            MediaQuery
+                                                .of(context)
+                                                .size
+                                                .width * 0.02)),
+                                    color: primaryColorTint,
+                                    child: Text(
+                                      "Continue",
+                                      style: textStyle.copyWith(
+                                          color: Colors.white),
+                                    ),
+                                  ),
                                 ),
                               ),
-                            );
-                    },
-                  ),
-                ),
-                Form(
-                  key: _formKey,
-                  child: Column(
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.all(
-                            MediaQuery.of(context).size.width * 0.05),
-                        child: Stack(
-                            alignment: AlignmentDirectional.centerEnd,
-                            children: [
-                              TextFormField(
-                                decoration: textInputDecoration.copyWith(
-                                    hintText: "Enter your Location"),
-                              ),
-                              IconButton(
-                                  onPressed: () {}, icon: Icon(Icons.search))
-                            ]),
-                      ),
-                      //Expanded(child: Container()),
-                      Padding(
-                        padding: EdgeInsets.all(
-                            MediaQuery.of(context).size.width * 0.08),
-                        child: SizedBox(
-                          width: double.infinity,
-                          height: MediaQuery.of(context).size.height * 0.055,
-                          child: MaterialButton(
-                            onPressed: () {
-                              if (_formKey.currentState!.validate())
-                                Navigator.pushAndRemoveUntil(
-                                    context,
-                                    PageTransition(
-                                        child: ConnectDevice(),
-                                        type: PageTransitionType.rightToLeft),
-                                    (route) => false);
-                            },
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(
-                                    MediaQuery.of(context).size.width * 0.02)),
-                            color: primaryColorTint,
-                            child: Text(
-                              "Continue",
-                              style: textStyle.copyWith(color: Colors.white),
                             ),
-                          ),
+                          ],
                         ),
-                      ),
+                      )
                     ],
                   ),
-                )
-              ],
-            )
-          ],
-        ),
+                ),
+              ),
+            );
+          }),
       ),
     );
   }

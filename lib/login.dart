@@ -40,9 +40,7 @@ class _LoginState extends State<Login> {
                 constraints: BoxConstraints(minHeight: constraint.maxHeight),
                 child: IntrinsicHeight(
                   child: Stack(children: [
-                    Positioned.fill(
-                      child: SvgPicture.asset("assets/images/background.svg"),
-                    ),
+                    Center(child: SvgPicture.asset("assets/images/background.svg")),
                     Padding(
                       padding: EdgeInsets.all(
                           MediaQuery.of(context).size.width * 0.05),
@@ -82,10 +80,7 @@ class _LoginState extends State<Login> {
                                     },
                                     decoration: textInputDecoration.copyWith(
                                         labelText: "Email id",
-                                        prefixIcon: Icon(
-                                          Icons.email,
-                                          color: Colors.grey,
-                                        )),
+                                    ),
                                   ),
                                   SizedBox(
                                       height:
@@ -102,16 +97,12 @@ class _LoginState extends State<Login> {
                                     },
                                     decoration: textInputDecoration.copyWith(
                                         labelText: "Password",
-                                        prefixIcon: Icon(
-                                          Icons.lock,
-                                          color: Colors.grey,
-                                        ),
                                         suffixIcon: IconButton(
                                           icon: Icon(
                                             obscureText
                                                 ? Icons.remove_red_eye
                                                 : Icons.remove_red_eye_outlined,
-                                            color: Colors.grey,
+                                            color: Colors.grey[400],
                                           ),
                                           onPressed: () {
                                             setState(() =>

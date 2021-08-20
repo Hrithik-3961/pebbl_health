@@ -34,26 +34,24 @@ class _CompleteProfileState extends State<CompleteProfile> {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      behavior: HitTestBehavior.opaque,
-      onTap: () {
-        FocusScope.of(context).requestFocus(FocusNode());
-      },
-      child: Scaffold(
-          appBar: AppBar(
-            backgroundColor: Colors.transparent,
-            elevation: 0,
-            automaticallyImplyLeading: false,
-          ),
-          body: LayoutBuilder(builder: (context, constraint) {
+    return Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          automaticallyImplyLeading: false,
+        ),
+        body: GestureDetector(
+            behavior: HitTestBehavior.opaque,
+            onTap: () {
+              FocusScope.of(context).requestFocus(FocusNode());
+            },
+          child: LayoutBuilder(builder: (context, constraint) {
             return SingleChildScrollView(
               child: ConstrainedBox(
                 constraints: BoxConstraints(minHeight: constraint.maxHeight),
                 child: IntrinsicHeight(
                   child: Stack(children: [
-                    Positioned.fill(
-                      child: SvgPicture.asset("assets/images/background.svg"),
-                    ),
+                    Center(child: SvgPicture.asset("assets/images/background.svg")),
                     Padding(
                       padding: EdgeInsets.all(
                           MediaQuery.of(context).size.width * 0.05),
@@ -73,7 +71,7 @@ class _CompleteProfileState extends State<CompleteProfile> {
                                 fontSize:
                                     MediaQuery.of(context).size.width * 0.06),
                           ),
-                          Expanded(child: Container()),
+                          Spacer(),
                           Padding(
                             padding: EdgeInsets.all(
                                 MediaQuery.of(context).size.width * 0.05),
@@ -92,10 +90,7 @@ class _CompleteProfileState extends State<CompleteProfile> {
                                     },
                                     decoration: textInputDecoration.copyWith(
                                         labelText: "First Name",
-                                        prefixIcon: Icon(
-                                          Icons.perm_identity,
-                                          color: Colors.grey,
-                                        )),
+                                    ),
                                   ),
                                   SizedBox(
                                       height:
@@ -111,10 +106,7 @@ class _CompleteProfileState extends State<CompleteProfile> {
                                     },
                                     decoration: textInputDecoration.copyWith(
                                         labelText: "Last Name",
-                                        prefixIcon: Icon(
-                                          Icons.perm_identity,
-                                          color: Colors.grey,
-                                        )),
+                                        ),
                                   ),
                                   SizedBox(
                                       height:
@@ -123,10 +115,7 @@ class _CompleteProfileState extends State<CompleteProfile> {
                                   DropdownButtonFormField(
                                     decoration: textInputDecoration.copyWith(
                                         labelText: "Gender",
-                                        prefixIcon: Icon(
-                                          Icons.transgender,
-                                          color: Colors.grey,
-                                        )),
+                                        ),
                                     value: genderDropDownValue,
                                     onChanged: (val) {
                                       setState(() {
@@ -190,10 +179,7 @@ class _CompleteProfileState extends State<CompleteProfile> {
                                     textInputAction: TextInputAction.next,
                                     decoration: textInputDecoration.copyWith(
                                         labelText: "Date of Birth",
-                                        prefixIcon: Icon(
-                                          Icons.calendar_today,
-                                          color: Colors.grey,
-                                        )),
+                                        ),
                                   ),
                                   SizedBox(
                                       height:
@@ -219,10 +205,6 @@ class _CompleteProfileState extends State<CompleteProfile> {
                                         decoration:
                                             textInputDecoration.copyWith(
                                           labelText: "Weight",
-                                          prefixIcon: Icon(
-                                            Icons.monitor_weight,
-                                            color: Colors.grey,
-                                          ),
                                         ),
                                       ),
                                       DropdownButtonHideUnderline(
@@ -271,10 +253,6 @@ class _CompleteProfileState extends State<CompleteProfile> {
                                         decoration:
                                             textInputDecoration.copyWith(
                                           labelText: "Height",
-                                          prefixIcon: Icon(
-                                            Icons.height,
-                                            color: Colors.grey,
-                                          ),
                                         ),
                                       ),
                                       DropdownButtonHideUnderline(
@@ -344,7 +322,7 @@ class _CompleteProfileState extends State<CompleteProfile> {
                 ),
               ),
             );
-          })),
-    );
+          }),
+        ));
   }
 }

@@ -8,16 +8,15 @@ const textStyle = TextStyle(
   color: secondaryColor,
 );
 
-const textInputDecoration = InputDecoration(
-  labelStyle: TextStyle(color: Colors.grey),
-  focusColor: Colors.grey,
+var textInputDecoration = InputDecoration(
+  labelStyle: TextStyle(color: Colors.grey[400]),
+  focusColor: Colors.grey[400]!,
   fillColor: Colors.white,
   filled: true,
-  enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.grey)),
-  disabledBorder:
-      OutlineInputBorder(borderSide: BorderSide(color: Colors.grey)),
-  focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.grey)),
-  errorBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.red)),
-  focusedErrorBorder:
-      OutlineInputBorder(borderSide: BorderSide(color: Colors.red)),
+  floatingLabelBehavior: FloatingLabelBehavior.always,
+  enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.grey[400]!),borderRadius: BorderRadius.circular(17)),
+  disabledBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.grey[400]!),borderRadius: BorderRadius.circular(17)),
+  focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.grey[400]!),borderRadius: BorderRadius.circular(17)),
+  errorBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.red),borderRadius: BorderRadius.circular(17)),
+  focusedErrorBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.red),borderRadius: BorderRadius.circular(17)),
 );

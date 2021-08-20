@@ -39,7 +39,7 @@ class _ConnectDeviceState extends State<ConnectDevice> {
                   fontSize: MediaQuery.of(context).size.width * 0.06,
                 ),
               ),
-              Expanded(child: Container()),
+              Spacer(),
               Padding(
                 padding:
                     EdgeInsets.all(MediaQuery.of(context).size.width * 0.08),
